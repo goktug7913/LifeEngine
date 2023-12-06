@@ -1,4 +1,9 @@
-project('LifeEngine', 'c', 'cpp', version : '0.0.1')
+project(
+  'LifeEngine',
+  'c', 'cpp', 
+  version : '0.0.1',
+  default_options : ['cpp_std=c++latest', 'c_std=c11']
+)
 
 cc = meson.get_compiler('c')
 cxx = meson.get_compiler('cpp')
