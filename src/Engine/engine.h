@@ -1,19 +1,22 @@
 #include <vector>
 #include "../Entity/entity.h"
 
-class Engine {
+class Engine
+{
 public:
   Engine();
   ~Engine();
-  
+
   void run();
 
   void handleEvents();
   void update();
   void render();
 
-  Entity& spawnEntity(); // TODO: For now we just spawn the base class. We need to make this generic.
-  void destroyEntity(Entity& entity);
+  Entity &spawnEntity();
+  Entity &spawnEntity(Transform transform);
+  void destroyEntity(Entity &entity);
+  int getEntityCount();
 
 private:
   int width;

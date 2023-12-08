@@ -1,5 +1,13 @@
-class Entity {
+#include <raylib.h>
+
+class Entity
+{
 public:
-  Entity ();
-  ~Entity ();
+  Entity();
+  ~Entity();
+
+  virtual void update(float dt);
+  virtual void draw();
+
+  Transform transform;
 };
