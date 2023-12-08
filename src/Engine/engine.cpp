@@ -21,6 +21,9 @@ Engine::~Engine() {
 
 void Engine::run() {
   // Main engine loop
+ 
+  this->spawnEntity();
+
   while (!WindowShouldClose()) {
     handleEvents();
     update();
@@ -33,10 +36,9 @@ void Engine::render() {
   // Render the game here.
     BeginDrawing();
     ClearBackground(RAYWHITE);
+
     DrawText("LifeEngine running", 10, 10, 20, BLACK);
-    DrawText("Delta:" + GetFrameTime(), 10, 30, 20, BLACK);
-    DrawFPS(width - 100, 10);
-    DrawGrid(50,10);
+    
     EndDrawing();
 }
 
@@ -47,4 +49,13 @@ void Engine::update() {
 
 void Engine::handleEvents() {
   // Handle events here.
+}
+
+Entity& Engine::spawnEntity() {
+  this->entities.push_back(Entity());
+  return this->entities.back();
+}
+
+void Engine::destroyEntity(Entity& entity) {
+  // TODO: Implement this.
 }
