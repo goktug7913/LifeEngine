@@ -2,7 +2,7 @@ project(
   'LifeEngine',
   'c', 'cpp', 
   version : '0.0.1',
-  default_options : ['cpp_std=c++latest', 'c_std=c11']
+  default_options : ['cpp_std=c++23', 'c_std=c11']
 )
 
 cc = meson.get_compiler('c')
@@ -40,7 +40,12 @@ if host_machine.system() == 'windows'
     cc.find_library('winmm'),
   ]
 elif host_machine.system() == 'darwin'
-  # TODO
+  link_args += [
+    '-framework', 'Cocoa',
+    '-framework', 'OpenGL',
+    '-framework', 'IOKit',
+    '-framework', 'CoreVideo',
+  ]
 elif host_machine.system() == 'linux'
   dependencies += [
     cc.find_library('m'),
