@@ -3,11 +3,16 @@
 #include <raylib.h>
 #include <algorithm>
 
+#ifdef __EMSCRIPTEN__
+// WASM specific includes.
+#include "emscripten.h"
+#endif
+
 Engine::Engine()
 {
-  width = 1920;
-  height = 1080;
-  targetFps = 120;
+  width = 800;
+  height = 600;
+  targetFps = 60;
 
   InitWindow(width, height, "LifeEngine");
   SetTargetFPS(targetFps);
@@ -23,12 +28,24 @@ Engine::~Engine()
   std::cout << "Engine destroyed.\n";
 }
 
+/**
+ * @brief Engine starter function.
+ */
 void Engine::run()
 {
-  // Main engine loop
+#ifdef __EMSCRIPTEN__
+  // For WASM we give a pointer to the run function, a delay of 0, and a flag of 1 to tell it to run the main loop repeatedly.
+  emscripten_set_main_loop(&loop, 0, 1);
+#else
 
-  this->spawnEntity();
+  // For native we just call the run function.
+  loop();
 
+#endif
+}
+
+void Engine::loop()
+{
   while (!WindowShouldClose())
   {
     handleEvents();
@@ -40,7 +57,6 @@ void Engine::run()
 
 void Engine::render()
 {
-  // Render the game here.
   BeginDrawing();
   ClearBackground(RAYWHITE);
 
@@ -56,7 +72,6 @@ void Engine::render()
 
 void Engine::update()
 {
-  // Update the game here.
   float dt = GetFrameTime();
 
   for (auto &entity : this->entities)

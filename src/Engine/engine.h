@@ -9,6 +9,7 @@ public:
 
   void run();
 
+  void loop();
   void handleEvents();
   void update();
   void render();
