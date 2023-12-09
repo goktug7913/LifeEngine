@@ -1,4 +1,5 @@
 #include "engine.h"
+#include "Engine/Entity/entity.h"
 #include <iostream>
 #include <raylib.h>
 #include <algorithm>
@@ -10,12 +11,19 @@
 
 Engine::Engine()
 {
-  width = 800;
-  height = 600;
-  targetFps = 60;
+  width = 1920;
+  height = 1080;
+  targetFps = 120;
 
   InitWindow(width, height, "LifeEngine");
   SetTargetFPS(targetFps);
+  
+  camera.zoom = 1.0f;
+  camera.rotation = 0.0f;
+  camera.offset = Vector2({
+      0.0f, 0.0f
+  });
+  camera.target = (Vector2){0.0f, 0.0f};
 
   std::cout << "Engine initialized.\n";
 }
@@ -58,21 +66,26 @@ void Engine::loop()
 void Engine::render()
 {
   BeginDrawing();
+  
   ClearBackground(RAYWHITE);
-
-  DrawText("LifeEngine running", 10, 10, 20, BLACK);
-
-  const char *fps = ("FPS: " + std::to_string(GetFPS())).c_str();
-  DrawText(fps, width - MeasureText(fps, 20) - 10, 10, 20, BLACK);
-
-  const char *entityCount = ("Entities: " + std::to_string(getEntityCount())).c_str();
-  DrawText(entityCount, width - MeasureText(entityCount, 20) - 10, 30, 20, BLACK);
-
+  
+  BeginMode2D(camera);
+  
   for (auto &entity : this->entities)
   {
     entity.draw();
   }
 
+  DrawText("LifeEngine running", 10, 10, 20, BLACK);
+
+  const char *fps = ("FPS: " + std::to_string(GetFPS())).c_str();
+  DrawText(fps, width - MeasureText(fps, 40) - 10, 10, 40, BLACK);
+
+  const char *entityCount = ("Entities: " + std::to_string(getEntityCount())).c_str();
+  DrawText(entityCount, width - MeasureText(entityCount, 40) - 10, 50, 40, BLACK);
+  
+  EndMode2D();
+  
   EndDrawing();
 }
 
@@ -94,28 +107,31 @@ void Engine::handleEvents()
 
   if (IsKeyDown(KEY_SPACE))
   {
-    auto transform = Transform();
-    transform.translation = Vector3{
+    for(auto i = 0; i < 5; i++) {
+      auto transform = Transform();
+      transform.translation = Vector3{
         GetRandomValue(0, width) * 1.0f,
         GetRandomValue(0, height) * 1.0f,
         0.0f};
 
-    spawnEntity(transform);
+      // whoa?
+      auto ent = new Entity();
+      spawnEntity(*ent, transform);
+    }
   }
 
   if (IsKeyDown(KEY_BACKSPACE))
     destroyEntity(this->entities.back());
 }
 
-Entity &Engine::spawnEntity()
+Entity &Engine::spawnEntity(Entity &entity)
 {
-  return this->spawnEntity(Transform());
+  return this->spawnEntity(entity, Transform());
 }
 
-Entity &Engine::spawnEntity(Transform transform)
+Entity &Engine::spawnEntity(Entity& entity, Transform transform)
 {
-  Entity entity;
-  entity.transform = transform;
+  entity.transform = new Transform(transform);
   this->entities.push_back(std::move(entity));
   return this->entities.back();
 }

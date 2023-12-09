@@ -8,8 +8,8 @@ project(
 cc = meson.get_compiler('c')
 cxx = meson.get_compiler('cpp')
 
-c_args = []
-cpp_args = []
+c_args = ['-O2']
+cpp_args = ['-O2','-fno-omit-frame-pointer','-g3']
 link_args = []
 name_suffix = []
 dependencies = []
@@ -69,6 +69,11 @@ sources = files(
   'src/Engine/engine.cpp',
   'src/Engine/Entity/entity.cpp',
   'src/Engine/Entity/Component/component.cpp',
+  'src/Engine/Entity/Component/genetics.cpp',
+  'src/Engine/Entity/Component/movement.cpp',
+  'src/Engine/Entity/Component/StateMachine/stateMachine.cpp',
+  'src/Engine/Entity/Component/StateMachine/States/stateBase.cpp',
+  'src/Engine/Entity/Component/StateMachine/States/wander.cpp',
 )
 
 executable('LifeEngine',
