@@ -62,6 +62,12 @@ void Engine::render()
 
   DrawText("LifeEngine running", 10, 10, 20, BLACK);
 
+  const char *fps = ("FPS: " + std::to_string(GetFPS())).c_str();
+  DrawText(fps, width - MeasureText(fps, 20) - 10, 10, 20, BLACK);
+
+  const char *entityCount = ("Entities: " + std::to_string(getEntityCount())).c_str();
+  DrawText(entityCount, width - MeasureText(entityCount, 20) - 10, 30, 20, BLACK);
+
   for (auto &entity : this->entities)
   {
     entity.draw();
@@ -83,6 +89,22 @@ void Engine::update()
 void Engine::handleEvents()
 {
   // Handle events here.
+  if (IsKeyPressed(KEY_ESCAPE))
+    CloseWindow();
+
+  if (IsKeyDown(KEY_SPACE))
+  {
+    auto transform = Transform();
+    transform.translation = Vector3{
+        GetRandomValue(0, width) * 1.0f,
+        GetRandomValue(0, height) * 1.0f,
+        0.0f};
+
+    spawnEntity(transform);
+  }
+
+  if (IsKeyDown(KEY_BACKSPACE))
+    destroyEntity(this->entities.back());
 }
 
 Entity &Engine::spawnEntity()

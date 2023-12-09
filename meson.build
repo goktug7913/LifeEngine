@@ -67,7 +67,8 @@ inc_dir = include_directories(
 sources = files(
   'src/main.cpp',
   'src/Engine/engine.cpp',
-  'src/Entity/entity.cpp',
+  'src/Engine/Entity/entity.cpp',
+  'src/Engine/Entity/Component/component.cpp',
 )
 
 executable('LifeEngine',
