@@ -11,6 +11,7 @@ class StateMachine : public Component
     StateMachine(Entity* parent) : Component(parent){
         // Create wander state
         stateQueue.push(new Wander(parent));
+        //stateQueue.front()->enter();
     }
     ~StateMachine();
 

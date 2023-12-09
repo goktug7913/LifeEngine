@@ -1,26 +1,23 @@
 #include "movement.h"
-#include <math.h>
+#include "raylib.h"
+#include "raymath.h"
 
 void Movement::update(float dt)
 {
-  moveTowardsTarget(target);
+  moveTowardsTarget(target, dt);
 }
 
-void Movement::moveInDirection(Vector2 direction)
+void Movement::moveTowardsTarget(Vector2 target, float dt)
 {
-  parent->transform->translation.x += direction.x;
-  parent->transform->translation.y += direction.y;
-}
-
-void Movement::moveTowardsTarget(Vector2 target)
-{
-  Vector2 direction = {0, 0};
-  direction.x = target.x - parent->transform->translation.x;
-  direction.y = target.y - parent->transform->translation.y;
-  float length = sqrt(direction.x * direction.x + direction.y * direction.y);
-  direction.x /= length;
-  direction.y /= length;
-  moveInDirection(direction);
+  auto position = parent->transform->translation;
+  // Get the direction to the target
+  auto direction = Vector2({target.x - position.x, target.y - position.y});
+  // Normalize the direction
+  auto normalizedDirection = Vector2Normalize(direction);
+  // Move towards the target
+  auto movement = Vector2Scale(normalizedDirection, speed * dt);
+  // Update the position
+  parent->transform->translation = Vector3({position.x + movement.x, position.y + movement.y, 0});
 }
 
 bool Movement::isMoving()
