@@ -4,8 +4,8 @@
 #include <vector>
 
 struct Size {
-  float x = 10;
-  float y = 10;
+  float x;
+  float y;
 };
 
 enum class Sex {

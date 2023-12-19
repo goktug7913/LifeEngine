@@ -11,7 +11,8 @@ Entity::Entity() {
   addComponent<StateMachine>(this);
 
   // Randomize sex
-  sex = GetRandomValue(0, 1) ? Sex::MALE : Sex::FEMALE;
+  sex = getComponent<Genetics>()->getSex();
+  size = getComponent<Genetics>()->getSize();
 
   std::cout << "Entity created.\n";
   return;

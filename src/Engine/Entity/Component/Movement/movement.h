@@ -1,4 +1,5 @@
 #include "../../entity.h"
+#include "../Genetics/genetics.h"
 #include "../component.h"
 #include <raylib.h>
 
@@ -8,7 +9,7 @@ public:
   ~Movement();
 
   Vector2 target = {0, 0};
-  float speed = 20.0f;
+  float speed = parent->getComponent<Genetics>()->getSpeed();
 
   void update(float dt);
   void draw(){};
