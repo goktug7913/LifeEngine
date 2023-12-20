@@ -11,8 +11,8 @@
 #endif
 
 Engine::Engine() {
-  width = 1920;
-  height = 1080;
+  width = 1600;
+  height = 900;
   targetFps = 120;
 
   InitWindow(width, height, "LifeEngine");
@@ -69,18 +69,19 @@ void Engine::render() {
     entity.draw();
   }
 
-  DrawText("LifeEngine running", 10, 10, 20, BLACK);
+  auto pos = GetScreenToWorld2D({0,0}, camera);
+
+  DrawText("LifeEngine running", pos.x+10, pos.y+10, 40, BLACK);
 
   const char *fps = ("FPS: " + std::to_string(GetFPS())).c_str();
-  DrawText(fps, width - MeasureText(fps, 40) - 10, 10, 40, BLACK);
+  DrawText(fps, pos.x+width - MeasureText(fps, 40) - 10, pos.y+10, 40, BLACK);
 
   const char *entityCount =
       ("Entities: " + std::to_string(getEntityCount())).c_str();
-  DrawText(entityCount, width - MeasureText(entityCount, 40) - 10, 50, 40,
+  DrawText(entityCount, pos.x+width - MeasureText(entityCount, 40) - 10, pos.y+50, 40,
            BLACK);
 
   EndMode2D();
-
   EndDrawing();
 }
 
@@ -93,7 +94,6 @@ void Engine::update() {
 }
 
 void Engine::handleEvents() {
-  // Handle events here.
   if (IsKeyPressed(KEY_ESCAPE))
     CloseWindow();
 

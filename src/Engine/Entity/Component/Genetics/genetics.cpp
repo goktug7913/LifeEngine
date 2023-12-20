@@ -19,14 +19,13 @@ Sex Genetics::getSex() {
   // dna 0 and 1 determines sex
   if ((dna[0] + dna[1]) / 2 > 0.5f) {
     return Sex::MALE;
-  } else {
-    return Sex::FEMALE;
   }
+  return Sex::FEMALE;
 }
 
 Size Genetics::getSize() {
   // dna 2 and 3 determines size
-  Size size;
+  Size size{};
   size.x = (dna[2] + dna[3]) / 2 * 10;
   size.y = (dna[2] + dna[3]) / 2 * 10;
   return size;
@@ -35,7 +34,7 @@ Size Genetics::getSize() {
 float Genetics::getSpeed() {
   // dna 4 and 5 determines speed
   // check if dna is initialized
-  if (dna.size() == 0) {
+  if (dna.empty()) {
     std::cout << "dna not initialized\n";
     return 0;
   }

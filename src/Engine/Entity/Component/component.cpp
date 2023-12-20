@@ -8,6 +8,6 @@ Component::Component(Entity *parent) {
 
 Component::~Component() { std::cout << "Component destroyed" << std::endl; }
 
-void Component::update(float dt) { return; }
+void Component::update(float dt) { }
 
-void Component::draw() { return; }
+void Component::draw() { }

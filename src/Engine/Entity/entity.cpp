@@ -15,7 +15,6 @@ Entity::Entity() {
   size = getComponent<Genetics>()->getSize();
 
   std::cout << "Entity created.\n";
-  return;
 }
 
 Entity::~Entity() { return; }
