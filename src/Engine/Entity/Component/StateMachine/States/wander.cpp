@@ -11,7 +11,7 @@ void Wander::enter() {
   owner->getComponent<Movement>()->target = target;
 }
 
-void Wander::update(float dt) {
+void Wander::update(const float dt) {
   elapsed += dt;
   if (elapsed >= timer) {
     // Set a random target around self
@@ -29,7 +29,7 @@ void Wander::update(float dt) {
 
 void Wander::exit() {}
 
-Vector2 Wander::GetRandomPositionAround(Vector2 position, float radius) {
+Vector2 Wander::GetRandomPositionAround(const Vector2 position, float radius) {
   return Vector2{
       GetRandomValue(position.x - radius, position.x + radius) * 1.0f,
       GetRandomValue(position.y - radius, position.y + radius) * 1.0f};

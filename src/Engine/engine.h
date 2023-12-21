@@ -16,9 +16,17 @@ public:
   void render();
 
   Entity &spawnEntity(Entity &entity);
-  Entity &spawnEntity(Entity &entity, Transform transform);
+  Entity &spawnEntity(Entity &entity, const Transform&transform);
+
+  template <typename T, typename... Args> T* spawnEntity(
+    Args &&...args) {
+    T *entity = new T(std::forward<Args>(args)...);
+    entities.push_back(std::move(*entity));
+    return &entities.back();
+  }
+
   void destroyEntity(Entity &entity);
-  int getEntityCount();
+  int getEntityCount() const;
 
 private:
   int width;

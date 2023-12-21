@@ -7,25 +7,20 @@ void Movement::update(float dt)
   moveTowardsTarget(target, dt);
 }
 
-void Movement::moveTowardsTarget(Vector2 target, float dt)
-{
-  auto position = parent->transform->translation;
+void Movement::moveTowardsTarget(const Vector2 target, const float dt) const {
+  const auto position = parent->transform->translation;
   // Get the direction to the target
-  auto direction = Vector2({target.x - position.x, target.y - position.y});
+  const auto direction = Vector2({target.x - position.x, target.y - position.y});
   // Normalize the direction
-  auto normalizedDirection = Vector2Normalize(direction);
+  const auto normalizedDirection = Vector2Normalize(direction);
   // Move towards the target
-  auto movement = Vector2Scale(normalizedDirection, speed * dt);
+  const auto movement = Vector2Scale(normalizedDirection, speed * dt);
   // Update the position
   parent->transform->translation = Vector3({position.x + movement.x, position.y + movement.y, 0});
 }
 
-bool Movement::isMoving()
-{
+bool Movement::isMoving() {
   return parent->transform->translation.x != target.x || parent->transform->translation.y != target.y;
 }
 
-Movement::~Movement()
-{
-  return;
-}
+Movement::~Movement() = default;

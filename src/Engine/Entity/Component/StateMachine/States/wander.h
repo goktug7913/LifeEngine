@@ -9,7 +9,7 @@ class Wander : public stateBase {
         void enter();
         void update(float dt);
         void exit();
-        Vector2 GetRandomPositionAround(Vector2 position, float radius);   
+        static Vector2 GetRandomPositionAround(Vector2 position, float radius);
     
     private:
         float elapsed = 0.0f;

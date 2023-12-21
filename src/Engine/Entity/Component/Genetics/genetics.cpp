@@ -4,8 +4,7 @@
 
 Genetics::~Genetics() {
   std::cout << "Genetics destroyed.\n";
-  return;
-};
+}
 
 void Genetics::mutate() {
   for (int i = 0; i < DNA_SIZE; i++) {
@@ -15,7 +14,7 @@ void Genetics::mutate() {
   }
 }
 
-Sex Genetics::getSex() {
+Sex Genetics::getSex() const {
   // dna 0 and 1 determines sex
   if ((dna[0] + dna[1]) / 2 > 0.5f) {
     return Sex::MALE;
@@ -23,15 +22,14 @@ Sex Genetics::getSex() {
   return Sex::FEMALE;
 }
 
-Size Genetics::getSize() {
-  // dna 2 and 3 determines size
-  Size size{};
-  size.x = (dna[2] + dna[3]) / 2 * 10;
-  size.y = (dna[2] + dna[3]) / 2 * 10;
+Size Genetics::getSize() const {
+  // dna 0, 1, 2 and 3 determines size
+  float val = (dna[0] + dna[1] + dna[2] + dna[3]) / 4;
+  Size size = {val * 10, val * 10};
   return size;
 }
 
-float Genetics::getSpeed() {
+float Genetics::getSpeed() const {
   // dna 4 and 5 determines speed
   // check if dna is initialized
   if (dna.empty()) {

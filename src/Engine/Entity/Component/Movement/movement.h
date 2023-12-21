@@ -5,14 +5,14 @@
 
 class Movement : public Component {
 public:
-  Movement(Entity *parent) : Component(parent) {}
-  ~Movement();
+  explicit Movement(Entity *parent) : Component(parent) {}
+  ~Movement() override;
 
   Vector2 target = {0, 0};
   float speed = parent->getComponent<Genetics>()->getSpeed();
 
-  void update(float dt);
-  void draw(){};
-  void moveTowardsTarget(Vector2 target, float dt);
+  void update(float dt) override;
+  void draw() override{};
+  void moveTowardsTarget(Vector2 target, float dt) const;
   bool isMoving();
 };

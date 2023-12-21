@@ -16,10 +16,11 @@ enum class Sex {
 
 class Entity {
 public:
-  Entity();
-  ~Entity();
+  explicit Entity(const Transform* transform);
+  virtual ~Entity();
 
-  Size size;
+  Transform *transform{};
+  Size size{};
   Sex sex;
 
   virtual void update(float dt);
@@ -36,8 +37,6 @@ public:
     }
     return nullptr;
   }
-
-  Transform *transform;
 
 private:
   std::vector<Component *> components;

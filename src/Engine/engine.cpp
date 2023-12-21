@@ -69,24 +69,26 @@ void Engine::render() {
     entity.draw();
   }
 
-  auto pos = GetScreenToWorld2D({0,0}, camera);
+  EndMode2D();
 
-  DrawText("LifeEngine running", pos.x+10, pos.y+10, 40, BLACK);
+  // UI Rendering is done after the 2D mode is ended.
+  // This is so that the UI is not world space.
+
+  DrawText("LifeEngine running", 10, 10, 40, BLACK);
 
   const char *fps = ("FPS: " + std::to_string(GetFPS())).c_str();
-  DrawText(fps, pos.x+width - MeasureText(fps, 40) - 10, pos.y+10, 40, BLACK);
+  DrawText(fps, width - MeasureText(fps, 40) - 10, 10, 40, BLACK);
 
   const char *entityCount =
       ("Entities: " + std::to_string(getEntityCount())).c_str();
-  DrawText(entityCount, pos.x+width - MeasureText(entityCount, 40) - 10, pos.y+50, 40,
+  DrawText(entityCount, width - MeasureText(entityCount, 40) - 10, 50, 40,
            BLACK);
 
-  EndMode2D();
   EndDrawing();
 }
 
 void Engine::update() {
-  float dt = GetFrameTime();
+  const float dt = GetFrameTime();
 
   for (auto &entity : this->entities) {
     entity.update(dt);
@@ -99,13 +101,12 @@ void Engine::handleEvents() {
 
   if (IsKeyDown(KEY_SPACE)) {
     for (auto i = 0; i < 5; i++) {
-      auto transform = Transform();
-      transform.translation = Vector3{GetRandomValue(0, width) * 1.0f,
+      auto transform = new Transform;
+      transform->translation = Vector3{GetRandomValue(0, width) * 1.0f,
                                       GetRandomValue(0, height) * 1.0f, 0.0f};
 
       // whoa?
-      auto ent = new Entity();
-      spawnEntity(*ent, transform);
+      spawnEntity<Entity>(transform);
     }
   }
 
@@ -133,18 +134,17 @@ Entity &Engine::spawnEntity(Entity &entity) {
   return this->spawnEntity(entity, Transform());
 }
 
-Entity &Engine::spawnEntity(Entity &entity, Transform transform) {
+Entity &Engine::spawnEntity(Entity &entity, const Transform& transform) {
   entity.transform = new Transform(transform);
   this->entities.push_back(std::move(entity));
   return this->entities.back();
 }
 
 void Engine::destroyEntity(Entity &entity) {
-  auto it = std::find_if(this->entities.begin(), this->entities.end(),
-                         [&entity](const Entity &e) { return &e == &entity; });
-  if (it != this->entities.end()) {
+  if (const auto it = std::ranges::find_if(this->entities,
+                                           [&entity](const Entity &e) { return &e == &entity; }); it != this->entities.end()) {
     this->entities.erase(it);
   }
 }
 
-int Engine::getEntityCount() { return this->entities.size(); }
+int Engine::getEntityCount() const { return this->entities.size(); }

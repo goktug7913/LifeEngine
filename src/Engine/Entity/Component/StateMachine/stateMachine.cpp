@@ -1,11 +1,8 @@
 #include "stateMachine.h"
 
-StateMachine::~StateMachine()
-{
-  return;
-}
+StateMachine::~StateMachine() = default;
 
-void StateMachine::update(float dt)
+void StateMachine::update(const float dt)
 {
   if (!stateQueue.empty())
   {

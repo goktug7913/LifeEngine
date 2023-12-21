@@ -26,7 +26,7 @@ public:
 
   void mutate();
 
-  Sex getSex();
-  Size getSize();
-  float getSpeed();
+  [[nodiscard]] Sex getSex() const;
+  [[nodiscard]] Size getSize() const;
+  [[nodiscard]] float getSpeed() const;
 };

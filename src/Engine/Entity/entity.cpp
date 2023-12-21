@@ -5,7 +5,7 @@
 #include "raylib.h"
 #include <iostream>
 
-Entity::Entity() {
+Entity::Entity(const Transform* transform) {
   addComponent<Genetics>(this);
   addComponent<Movement>(this);
   addComponent<StateMachine>(this);
@@ -13,27 +13,27 @@ Entity::Entity() {
   // Randomize sex
   sex = getComponent<Genetics>()->getSex();
   size = getComponent<Genetics>()->getSize();
+  this->transform = new Transform(*transform);
 
   std::cout << "Entity created.\n";
 }
 
-Entity::~Entity() { return; }
+Entity::~Entity() = default;
 
-void Entity::update(float dt) {
-  for (auto &component : this->components) {
+void Entity::update(const float dt) {
+  for (auto const &component : this->components) {
     component->update(dt);
   }
 }
 
 void Entity::draw() {
-  for (auto &component : this->components) {
+  for (const auto &component : this->components) {
     component->draw();
   }
 
   // Debug draw
   DrawRectangle(transform->translation.x, transform->translation.y, size.x,
                 size.y, sex == Sex::MALE ? BLUE : PINK);
-  return;
 }
 
 template <typename T, typename... Args>

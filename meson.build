@@ -8,8 +8,8 @@ project(
 cc = meson.get_compiler('c')
 cxx = meson.get_compiler('cpp')
 
-c_args = ['-O2']
-cpp_args = ['-O2','-fno-omit-frame-pointer','-g3']
+c_args = ['-O3']
+cpp_args = ['-O3','-fno-omit-frame-pointer','-g3']
 link_args = []
 name_suffix = []
 dependencies = []
