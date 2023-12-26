@@ -1,6 +1,6 @@
-#include "../../entity.h"
+#include "../../../../Engine/Entity/Component/component.h"
+#include "../../../../Engine/Entity/entity.h"
 #include "../Genetics/genetics.h"
-#include "../component.h"
 #include <raylib.h>
 
 class Movement : public Component {

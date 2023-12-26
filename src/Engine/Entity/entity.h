@@ -3,26 +3,12 @@
 #include <raylib.h>
 #include <vector>
 
-struct Size {
-  float x;
-  float y;
-};
-
-enum class Sex {
-  MALE,
-  FEMALE,
-  NA,
-};
-
 class Entity {
 public:
-  explicit Entity(const Transform* transform);
+  explicit Entity(const Transform *transform);
   virtual ~Entity();
 
   Transform *transform{};
-  Size size{};
-  Sex sex = Sex::NA;
-  Color color{};
 
   virtual void update(float dt);
   virtual void draw();

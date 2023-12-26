@@ -1,7 +1,8 @@
 #pragma once
-#include "../../../helpers.h"
-#include "../../entity.h"
-#include "../component.h"
+#include "../../../../Engine/Entity/Component/component.h"
+#include "../../../../Engine/Entity/entity.h"
+#include "../../../../Engine/helpers.h"
+#include "../../agent.h"
 #include <vector>
 
 constexpr int DNA_SIZE = 10; // Must be bigger than 5

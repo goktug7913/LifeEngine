@@ -70,11 +70,11 @@ sources = files(
   'src/Engine/helpers.cpp',
   'src/Engine/Entity/entity.cpp',
   'src/Engine/Entity/Component/component.cpp',
-  'src/Engine/Entity/Component/Genetics/genetics.cpp',
-  'src/Engine/Entity/Component/Movement/movement.cpp',
   'src/Engine/Entity/Component/StateMachine/stateMachine.cpp',
   'src/Engine/Entity/Component/StateMachine/States/stateBase.cpp',
-  'src/Engine/Entity/Component/StateMachine/States/wander.cpp',
+  'src/LifeSim/Agent/Components/Genetics/genetics.cpp',
+  'src/LifeSim/Agent/Components/Movement/movement.cpp',
+  'src/LifeSim/Agent/Components/StateMachine/States/wander.cpp',
 )
 
 executable('LifeEngine',

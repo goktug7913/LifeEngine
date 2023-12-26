@@ -1,11 +1,9 @@
 #include "genetics.h"
-#include "../../../helpers.h"
+#include "../../../../Engine/helpers.h"
 #include "raymath.h"
 #include <iostream>
 
-Genetics::~Genetics() {
-  std::cout << "Genetics destroyed.\n";
-}
+Genetics::~Genetics() { std::cout << "Genetics destroyed.\n"; }
 
 void Genetics::mutate() {
   for (int i = 0; i < DNA_SIZE; i++) {
@@ -43,12 +41,13 @@ float Genetics::getSpeed() const {
 
 Color Genetics::getColor() const {
   // dna 0, 1, 6 and 7 determines color
-  Color color = {
-    static_cast<unsigned char>(Remap((dna[0]+dna[7])/2, 0.0f, 1.0f, 0.0f, 255.0f)),
-    static_cast<unsigned char>(Remap((dna[1]+dna[7])/2, 0.0f, 1.0f, 0.0f, 255.0f)),
-    static_cast<unsigned char>(Remap((dna[6]+dna[7])/2, 0.0f, 1.0f, 0.0f, 255.0f)),
-    255
-  };
+  Color color = {static_cast<unsigned char>(
+                     Remap((dna[0] + dna[7]) / 2, 0.0f, 1.0f, 0.0f, 255.0f)),
+                 static_cast<unsigned char>(
+                     Remap((dna[1] + dna[7]) / 2, 0.0f, 1.0f, 0.0f, 255.0f)),
+                 static_cast<unsigned char>(
+                     Remap((dna[6] + dna[7]) / 2, 0.0f, 1.0f, 0.0f, 255.0f)),
+                 255};
 
   return color;
 }
