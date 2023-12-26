@@ -1,5 +1,6 @@
 #include "genetics.h"
 #include "../../../helpers.h"
+#include "raymath.h"
 #include <iostream>
 
 Genetics::~Genetics() {
@@ -37,5 +38,17 @@ float Genetics::getSpeed() const {
     return 0;
   }
 
-  return (dna[4] + dna[5]) / 2 * 10;
+  return (dna[4] + dna[5]) / 2 * 50;
+}
+
+Color Genetics::getColor() const {
+  // dna 0, 1, 6 and 7 determines color
+  Color color = {
+    static_cast<unsigned char>(Remap((dna[0]+dna[7])/2, 0.0f, 1.0f, 0.0f, 255.0f)),
+    static_cast<unsigned char>(Remap((dna[1]+dna[7])/2, 0.0f, 1.0f, 0.0f, 255.0f)),
+    static_cast<unsigned char>(Remap((dna[6]+dna[7])/2, 0.0f, 1.0f, 0.0f, 255.0f)),
+    255
+  };
+
+  return color;
 }

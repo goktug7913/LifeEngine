@@ -21,7 +21,8 @@ public:
 
   Transform *transform{};
   Size size{};
-  Sex sex;
+  Sex sex = Sex::NA;
+  Color color{};
 
   virtual void update(float dt);
   virtual void draw();

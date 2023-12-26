@@ -5,7 +5,9 @@
 #include "raylib.h"
 #include <iostream>
 
-Entity::Entity(const Transform* transform) {
+Entity::Entity(const Transform *transform) {
+  this->transform = new Transform(*transform);
+
   addComponent<Genetics>(this);
   addComponent<Movement>(this);
   addComponent<StateMachine>(this);
@@ -13,7 +15,7 @@ Entity::Entity(const Transform* transform) {
   // Randomize sex
   sex = getComponent<Genetics>()->getSex();
   size = getComponent<Genetics>()->getSize();
-  this->transform = new Transform(*transform);
+  color = getComponent<Genetics>()->getColor();
 
   std::cout << "Entity created.\n";
 }
@@ -33,7 +35,7 @@ void Entity::draw() {
 
   // Debug draw
   DrawRectangle(transform->translation.x, transform->translation.y, size.x,
-                size.y, sex == Sex::MALE ? BLUE : PINK);
+                size.y, color);
 }
 
 template <typename T, typename... Args>

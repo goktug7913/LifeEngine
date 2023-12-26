@@ -13,6 +13,7 @@ void Wander::enter() {
 
 void Wander::update(const float dt) {
   elapsed += dt;
+  
   if (elapsed >= timer) {
     // Set a random target around self
     target = GetRandomPositionAround(

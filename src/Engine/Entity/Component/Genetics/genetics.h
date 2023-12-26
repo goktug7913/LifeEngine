@@ -29,4 +29,5 @@ public:
   [[nodiscard]] Sex getSex() const;
   [[nodiscard]] Size getSize() const;
   [[nodiscard]] float getSpeed() const;
+  [[nodiscard]] Color getColor() const;
 };

@@ -20,7 +20,10 @@ Engine::Engine() {
 
   camera.zoom = 1.0f;
   camera.rotation = 0.0f;
-  camera.offset = Vector2({0.0f, 0.0f});
+  camera.offset = Vector2({
+      static_cast<float>(width) / 2,
+      static_cast<float>(height) / 2,
+      });
   camera.target = (Vector2){0.0f, 0.0f};
 
   std::cout << "Engine initialized.\n";
@@ -96,14 +99,39 @@ void Engine::update() {
 }
 
 void Engine::handleEvents() {
+  auto dt = GetFrameTime();
+
   if (IsKeyPressed(KEY_ESCAPE))
     CloseWindow();
 
+  if (IsWindowResized()) {
+    width = GetScreenWidth();
+    height = GetScreenHeight();
+    
+    camera.offset = Vector2{
+      static_cast<float>(width) / 2,
+      static_cast<float>(height) / 2,
+    };
+  }
+
+  // Debug spawning
   if (IsKeyDown(KEY_SPACE)) {
-    for (auto i = 0; i < 5; i++) {
+    for (auto i = 0; i < 50; i++) {
+      // Get corner of screen in world space
+      const auto topLeft = GetScreenToWorld2D(Vector2{0.0f, 0.0f}, camera);
+      const auto bottomRight = GetScreenToWorld2D(Vector2{
+          static_cast<float>(width),
+          static_cast<float>(height)
+        },
+        camera
+      );
+
       auto transform = new Transform;
-      transform->translation = Vector3{GetRandomValue(0, width) * 1.0f,
-                                      GetRandomValue(0, height) * 1.0f, 0.0f};
+      transform->translation = Vector3{
+        static_cast<float>(GetRandomValue(topLeft.x, bottomRight.x)),
+        static_cast<float>(GetRandomValue(topLeft.y, bottomRight.y)),
+        0.0f
+      };
 
       // whoa?
       spawnEntity<Entity>(transform);
@@ -112,21 +140,30 @@ void Engine::handleEvents() {
 
   if (IsKeyDown(KEY_BACKSPACE))
     destroyEntity(this->entities.back());
-
+  
+  // Camera movement
   if (IsKeyDown(KEY_W)) {
-    camera.offset = Vector2Add(camera.offset, Vector2{0.0f, 1.0f});
+    camera.target = Vector2Add(camera.target, Vector2{0.0f, -200.0f * dt});
   }
 
   if (IsKeyDown(KEY_A)) {
-    camera.offset = Vector2Add(camera.offset, Vector2{1.0f, 0.0f});
+    camera.target = Vector2Add(camera.target, Vector2{-200.0f * dt, 0.0f});
   }
 
   if (IsKeyDown(KEY_S)) {
-    camera.offset = Vector2Add(camera.offset, Vector2{0.0f, -1.0f});
+    camera.target = Vector2Add(camera.target, Vector2{0.0f, 200.0f * dt});
   }
 
   if (IsKeyDown(KEY_D)) {
-    camera.offset = Vector2Add(camera.offset, Vector2{-1.0f, 0.0f});
+    camera.target = Vector2Add(camera.target, Vector2{200.0f * dt, 0.0f});
+  }
+  
+  // Camera scroll zoom
+  // TODO: Make this work with mouse position.
+  if (GetMouseWheelMove() > 0) {
+    camera.zoom += 0.03f * camera.zoom * camera.zoom;
+  } else if (GetMouseWheelMove() < 0) {
+    camera.zoom -= 0.03f * camera.zoom * camera.zoom;
   }
 }
 
