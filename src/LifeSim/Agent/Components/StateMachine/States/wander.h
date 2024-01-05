@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../../../Engine/Entity/entity.h"
-#include "../../../../Engine/Entity/Component/StateMachine/States/stateBase.h"
+#include "src/Engine/Entity/Component/StateMachine/States/stateBase.h"
 #include <raylib.h>
 class Wander : public stateBase {
 public:

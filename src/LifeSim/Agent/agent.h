@@ -1,6 +1,8 @@
 #pragma once
-#include "../Component/StateMachine/stateMachine.h"
 #include "Engine/Entity/entity.h"
+#include "src/Engine/Entity/Component/StateMachine/stateMachine.h"
+#include "src/LifeSim/Agent/Components/Genetics/genetics.h"
+#include "src/LifeSim/Agent/Components/Movement/movement.h"
 
 enum class Sex {
   MALE,

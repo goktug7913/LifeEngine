@@ -1,6 +1,6 @@
 #include "../../../../Engine/Entity/Component/component.h"
 #include "../../../../Engine/Entity/entity.h"
-#include "../Genetics/genetics.h"
+#include "src/LifeSim/Agent/Components/Genetics/genetics.h"
 #include <raylib.h>
 
 class Movement : public Component {
