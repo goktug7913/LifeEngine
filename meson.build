@@ -1,15 +1,16 @@
 project(
-  'LifeEngine',
-  'c', 'cpp', 
-  version : '0.0.1',
-  default_options : ['cpp_std=c++23', 'c_std=c11']
+  'Cosmogenesis',
+  'c',
+  'cpp',
+  version: '0.0.1',
+  default_options: ['cpp_std=c++23', 'c_std=c11'],
 )
 
 cc = meson.get_compiler('c')
 cxx = meson.get_compiler('cpp')
 
 c_args = ['-O3']
-cpp_args = ['-O3','-fno-omit-frame-pointer','-g3']
+cpp_args = ['-O3', '-fno-omit-frame-pointer', '-g3']
 link_args = []
 name_suffix = []
 dependencies = []
@@ -18,18 +19,24 @@ dependencies = []
 cmake = import('cmake')
 raylib_opts = cmake.subproject_options()
 raylib_opts.set_install(false)
-raylib_opts.add_cmake_defines({
-  'BUILD_EXAMPLES': 'OFF',
-  # Add other CMake options for Raylib, if needed
-})
+raylib_opts.add_cmake_defines(
+  {
+    'BUILD_EXAMPLES': 'OFF',
+    # Add other CMake options for Raylib, if needed
+  },
+)
 if cc.get_id() == 'emscripten'
-  raylib_opts.add_cmake_defines({
-    'PLATFORM': 'Web',
-  })
+  raylib_opts.add_cmake_defines(
+    {
+      'PLATFORM': 'Web',
+    },
+  )
 else
-  raylib_opts.add_cmake_defines({
-    'PLATFORM': 'Desktop',
-  })
+  raylib_opts.add_cmake_defines(
+    {
+      'PLATFORM': 'Desktop',
+    },
+  )
 endif
 raylib_subproject = cmake.subproject('raylib', options: raylib_opts)
 dependencies += raylib_subproject.dependency('raylib')
@@ -66,19 +73,10 @@ inc_dir = include_directories(
 
 sources = files(
   'src/main.cpp',
-  'src/Engine/engine.cpp',
-  'src/Engine/helpers.cpp',
-  'src/Engine/Entity/entity.cpp',
-  'src/Engine/Entity/Component/component.cpp',
-  'src/Engine/Entity/Component/StateMachine/stateMachine.cpp',
-  'src/Engine/Entity/Component/StateMachine/States/stateBase.cpp',
-  'src/LifeSim/Agent/agent.cpp',
-  'src/LifeSim/Agent/Components/Genetics/genetics.cpp',
-  'src/LifeSim/Agent/Components/Movement/movement.cpp',
-  'src/LifeSim/Agent/Components/StateMachine/States/wander.cpp',
 )
 
-executable('LifeEngine',
+executable(
+  'Cosmogenesis',
   sources,
   c_args: c_args,
   cpp_args: cpp_args,
