@@ -72,6 +72,8 @@ inc_dir = include_directories(
 )
 
 sources = files(
+  'src/engine/idProvider/idProvider.cpp',
+  'src/engine/simObj/simObj.cpp',
   'src/main.cpp',
 )
 
