@@ -66,16 +66,6 @@ inc_dir = include_directories(
 
 sources = files(
   'src/main.cpp',
-  'src/Engine/engine.cpp',
-  'src/Engine/helpers.cpp',
-  'src/Engine/Entity/entity.cpp',
-  'src/Engine/Entity/Component/component.cpp',
-  'src/Engine/Entity/Component/StateMachine/stateMachine.cpp',
-  'src/Engine/Entity/Component/StateMachine/States/stateBase.cpp',
-  'src/LifeSim/Agent/agent.cpp',
-  'src/LifeSim/Agent/Components/Genetics/genetics.cpp',
-  'src/LifeSim/Agent/Components/Movement/movement.cpp',
-  'src/LifeSim/Agent/Components/StateMachine/States/wander.cpp',
 )
 
 executable('LifeEngine',
